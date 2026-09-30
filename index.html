@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComicCraft - AI Comic Story Creator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            background: #6c3cff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 8px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .input-box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #ccc;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            resize: none;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #6c3cff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5125d6;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 15px;
+            color: #6c3cff;
+            font-weight: bold;
+        }
+
+        .comic-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .comic-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .comic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            border: 4px solid #222;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 250px;
+            position: relative;
+        }
+
+        .panel-number {
+            background: #222;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .scene {
+            height: 120px;
+            background: #eee;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .dialogue {
+            background: #fff;
+            border: 2px solid #222;
+            border-radius: 20px;
+            padding: 10px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: #222;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>ComicCraft</h1>
+    <p>AI Comic Story Creator using Gemini</p>
+</header>
+
+<div class="container">
+
+    <div class="input-box">
+
+        <label for="story">
+            Enter your story idea:
+        </label>
+
+        <textarea id="story"
+            placeholder="Example: Two friends prepare for their college exam...">
+        </textarea>
+
+        <button onclick="generateComic()">
+            Generate Comic
+        </button>
+
+        <div id="loading">
+            Creating your comic story...
+        </div>
+
+    </div>
+
+    <div class="comic-container" id="comicContainer">
+
+        <h2>Your AI Comic</h2>
+
+        <div class="comic-grid" id="comicGrid">
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>ComicCraft © 2026</p>
+</footer>
+
+
+<script>
+
+function generateComic() {
+
+    const story = document.getElementById("story").value.trim();
+
+    if (story === "") {
+        alert("Please enter a story idea!");
+        return;
+    }
+
+    document.getElementById("loading").style.display = "block";
+
+    setTimeout(() => {
+
+        document.getElementById("loading").style.display = "none";
+
+        const comicContainer =
+            document.getElementById("comicContainer");
+
+        const comicGrid =
+            document.getElementById("comicGrid");
+
+        comicGrid.innerHTML = "";
+
+        const panels = [
+
+            {
+                scene: "The story begins...",
+                dialogue: "Let's begin our adventure!"
+            },
+
+            {
+                scene: "The main characters face a challenge.",
+                dialogue: "Oh no! What should we do?"
+            },
+
+            {
+                scene: "They think of a clever solution.",
+                dialogue: "I have an idea!"
+            },
+
+            {
+                scene: "The characters solve the problem.",
+                dialogue: "We did it!"
+            },
+
+            {
+                scene: "The story comes to a happy ending.",
+                dialogue: "What an amazing adventure!"
+            }
+
+        ];
+
+        panels.forEach((panel, index) => {
+
+            const panelElement =
+                document.createElement("div");
+
+            panelElement.className = "panel";
+
+            panelElement.innerHTML = `
+                <span class="panel-number">
+                    Panel ${index + 1}
+                </span>
+
+                <div class="scene">
+                    ${panel.scene}
+                </div>
+
+                <div class="dialogue">
+                    "${panel.dialogue}"
+                </div>
+            `;
+
+            comicGrid.appendChild(panelElement);
+
+        });
+
+        comicContainer.style.display = "block";
+
+    }, 1500);
+
+}
+
+</script>
+
+</body>
+</html>
